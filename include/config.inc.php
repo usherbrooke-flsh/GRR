@@ -63,8 +63,9 @@ $nb_year_calendar = 10;
  En résumé, pour activer cette fonctionnalité, décommentez la ligne suivante (en supprimant le premier caractère #,
  et remplacez -7 par +n ou -n où "n" est le nombre d'heures d'avance ou de retard de GRR sur l'heure système du serveur.
 */
+ $timezone = 'America/Toronto';
  putenv("TZ=posix/Etc/GMT+0");
- putenv("TZ=America/Toronto");
+ putenv("TZ={$timezone}");
 
 # Changement d'heure été<->hiver
 # $correct_heure_ete_hiver = 1 => GRR prend en compte les changements d'heure

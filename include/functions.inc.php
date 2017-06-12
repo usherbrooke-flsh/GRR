@@ -711,16 +711,15 @@ function affiche_date($x)
 //Si type = ete =>  La fonction retourne la date du jour de passage à l'heure d'été
 function heure_ete_hiver($type, $annee, $heure)
 {
-	if ($type == "ete")
-		$debut = mktime($heure, 0, 0, 03, 31, $annee);
-	// 31-03-$annee
-	else
-		$debut = mktime($heure,0, 0, 10, 31, $annee);
-	// 31-10-$annee
-	while (date("D", $debut ) != 'Sun')
-		$debut = mktime($heure, 0, 0, date("m", $debut), date("d", $debut) - 1, date("Y", $debut));
-	//On retire 1 jour par rapport à la date examinée
-	return $debut;
+    global $timezone;
+    $d = strtotime($annee.'-01-01');
+    $f = strtotime($annee.'-12-31');
+    $tz = new DateTimeZone($timezone);
+    $transitions = $tz->getTransitions($d, $f);
+
+    $offset = ($type == 'ete') ? 1 : 2;
+
+    return $transitions[$offset]['ts'];
 }
 
 # Remove backslash-escape quoting if PHP is configured to do it with
