@@ -234,7 +234,7 @@ else
 		(int)$week_end+1);
 		$weekday = (date("w", $t) + 7 - $weekstarts) % 7;
 		$prev_weekday = -1;
-		$slot = ($t - $week_midnight) % 86400 / $resolution;
+        $slot = ((date('H', $t) * 60 * 60) + (date('i', $t) * 60) + date('s', $t)) % (24 * 60 * 60) / $resolution;
 
 		$firstday = date("d", $t);
 		$lastday = date("d", $row[1]);
@@ -439,7 +439,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 			if (!isset($correct_heure_ete_hiver) || ($correct_heure_ete_hiver == 1))
 			{
 				$temp =   mktime(0, 0, 0, $wmonth, $wday,$wyear);
-				if ($heureete1 == $temp)
+				if (date('Y-m-d', $heureete1) == date('Y-m-d', $temp))
 				{
 					$semaine_changement_heure_ete = 'yes';
 					$temp2 =   mktime($hour, 0, 0, $wmonth, $wday, $wyear);
@@ -457,7 +457,7 @@ for ($t = $week_start; $t <= $week_end; $t += 86400)
 						$insere_case = 'n';
 					}
 				}
-				else if ($heurehiver1 == $temp)
+				else if (date('Y-m-d', $heurehiver1) == date('Y-m-d', $temp))
 				{
 					$semaine_changement_heure_hiver = 'yes';
 					$temp2 =   mktime($hour, 0, 0, $wmonth, $wday, $wyear);
