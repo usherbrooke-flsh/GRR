@@ -704,24 +704,6 @@ function affiche_date($x)
 	return $result;
 }
 
-//L'heure d'été commence le dernier dimanche de mars * et se termine le dernier dimanche d'octobre
-//Passage à l'heure d'hiver : -1h, le changement s'effectue à 3h
-//Passage à l'heure d'été : +1h, le changement s'effectue à 2h
-//Si type = hiver => La fonction retourne la date du jour de passage à l'heure d'hiver
-//Si type = ete =>  La fonction retourne la date du jour de passage à l'heure d'été
-function heure_ete_hiver($type, $annee, $heure)
-{
-    global $timezone;
-    $d = strtotime($annee.'-01-01');
-    $f = strtotime($annee.'-12-31');
-    $tz = new DateTimeZone($timezone);
-    $transitions = $tz->getTransitions($d, $f);
-
-    $offset = ($type == 'ete') ? 1 : 2;
-
-    return $transitions[$offset]['ts'];
-}
-
 # Remove backslash-escape quoting if PHP is configured to do it with
 # magic_quotes_gpc. Use this whenever you need the actual value of a GET/POST
 # form parameter (which might have special characters) regardless of PHP's
